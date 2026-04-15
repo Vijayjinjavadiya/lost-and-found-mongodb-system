@@ -269,8 +269,11 @@ def render_detail_popup(doc):
 
         with col_img:
             if doc.get("image"):
-                img_bytes = base64.b64decode(doc["image"])
-                st.image(img_bytes, use_container_width=True, caption="Uploaded Photo")
+                try:
+                    img_bytes = base64.b64decode(doc["image"])
+                    st.image(img_bytes, use_container_width=True, caption="Uploaded Photo")
+                except Exception:
+                    st.write("⚠️ Image not available")
             else:
                 icon = CATEGORY_ICONS.get(doc.get("category", ""), "📦")
                 st.markdown(f"""
@@ -307,8 +310,11 @@ def render_cards_grid(docs, cols_per_row=4):
                 # Detail expander right under this card
                 with st.expander("View Details"):
                     if doc.get("image"):
-                        img_bytes = base64.b64decode(doc["image"])
-                        st.image(img_bytes, use_container_width=True)
+                        try:
+                            img_bytes = base64.b64decode(doc["image"])
+                            st.image(img_bytes, use_container_width=True)
+                        except Exception:
+                            st.write("⚠️ Image not available")
                     st.markdown(f"**📝 Description:**")
                     st.markdown(f"> {doc.get('description', 'No description')}")
                     st.markdown(f"**📂 Category:** {doc.get('category', '')}")
@@ -529,8 +535,11 @@ elif menu == "🗑️ Delete Item":
         col1, col2 = st.columns([1, 2])
         with col1:
             if current_doc.get("image"):
-                img_bytes = base64.b64decode(current_doc["image"])
-                st.image(img_bytes, use_container_width=True)
+                try:
+                    img_bytes = base64.b64decode(current_doc["image"])
+                    st.image(img_bytes, use_container_width=True)
+                except Exception:
+                    st.write("⚠️ Image not available")
             else:
                 icon = CATEGORY_ICONS.get(current_doc.get("category", ""), "📦")
                 st.markdown(f"""
